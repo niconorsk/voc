@@ -161,6 +161,14 @@ class ClassTests(TranspileTestCase):
             print(inst2.x)
             """, run_in_function=False)
 
+    def test_class_dunder(self):
+        self.assertCodeExecution("""
+            class MyClass:
+                pass
+            print(MyClass().__class__)
+            print(MyClass().__class__.__name__)
+        """, run_in_function=False)
+
 
 class ClassMethodTests(TranspileTestCase):
     @expectedFailure

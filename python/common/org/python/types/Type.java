@@ -117,6 +117,7 @@ public class Type extends org.python.types.Object implements org.python.Callable
         // Set the name of the class.
         if (name != null) {
             python_type.PYTHON_TYPE_NAME = name;
+            python_type.__dict__.put("__name__", new org.python.types.Str(name));
         }
 
         // Set __base__ and __bases__ for the type
@@ -271,12 +272,23 @@ public class Type extends org.python.types.Object implements org.python.Callable
                     )
             );
         }
-        return new org.python.types.Str(
+        org.python.Object module_name = this.__dict__.get("__module__");
+        if (module_name != null) {
+            return new org.python.types.Str(
+                String.format("<class '%s.%s'%s>",
+                        module_name,
+                        org.Python.typeName(this.klass),
+                        this.origin == Origin.PLACEHOLDER ? " (placeholder)" : ""
+                )
+            );
+        } else {
+            return new org.python.types.Str(
                 String.format("<class '%s'%s>",
                         org.Python.typeName(this.klass),
                         this.origin == Origin.PLACEHOLDER ? " (placeholder)" : ""
                 )
-        );
+            );
+        }
     }
 
     public org.python.Object __getattribute_null(java.lang.String name) {

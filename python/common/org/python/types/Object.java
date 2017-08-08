@@ -1,7 +1,9 @@
 package org.python.types;
 
 public class Object extends java.lang.RuntimeException implements org.python.Object {
+    @org.python.Attribute
     public java.util.Map<java.lang.String, org.python.Object> __dict__;
+    @org.python.Attribute
     public org.python.types.Type __class__;
     public org.python.types.Type.Origin origin;
 
